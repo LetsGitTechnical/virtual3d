@@ -2,6 +2,7 @@
 # of the virtual3d game
 
 import cv2 
+import numpy as np
 
 class Tunnel:
   def __init__(self):
@@ -149,16 +150,53 @@ class FaceFinder:
 
         for (x, y, w, h) in faces:
             if w > bw : 
-                bx,by, bw, bh = x,y,w,h
+                bx, by, bw, bh = x,y,w,h
 
         cv2.rectangle(frame, (bx, by), (bx+bw, by+bh), (0, 255, 255), 3)
 
         return((bx+bw//2), (by+bh//2))
 
+class Stage: #often called in video game programming
+
+ def __init__(self):
+   self.disp_h = 0
+   self.disp_w = 0
+   self.cam_h = 720
+   self.cam_w = 1280
+   self.save_x = 960 #x position being saved between frame
+ def draw_target_xy(self, img, pos, size): #draws target in appropiate position given users position
+   tx, ty, tz = pos
+   cv2.circle(img, pos, size, (0, 0, 255), -1) #color is white and -1 is a full circle
+           
+   
+   cv2.circle(img, pos, int(size*.8), (255, 255, 255), -1)
+
+   cv2.circle(img, pos, int(size *.6), (0, 0, 255), -1)
+   
+   cv2.circle(img, pos, int(size* .4), (255, 255, 255), -1)
+
+   cv2.circle(img, pos, int(size*.2),(0, 0, 255), -1) 
+           
+
+   
+
+
+ 
+ #def update(self, facexy)#draws tunnel and targets based on user position
+  #x,y= facexy
+ # e = .9 # smoothing constant
+ # x = e * x + (1-e)*self.save_x
+ # img = np.zros([1080,1920,3])
+ # decay = 3
+ # sx = sy = 0
+  #dx = int((x - self.cam_w/2)*2)
+ # for i i
+
+
 #----------------------------------------
 #main
 print('starting OO virtual3d.')# baby step to make sure machine is working
-ff = FaceFinder()
+ff = FaceFinder()#creating facefinder instance
 
 cap = cv2.VideoCapture(cv2.CAP_ANY)
 
@@ -187,5 +225,5 @@ while True:
 #destroy cam
 cap.release()
 
-Cv2.destroyAllWindows()
+cv2.destroyAllWindows()
 print('virtual3d complete')
