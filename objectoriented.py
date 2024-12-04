@@ -179,18 +179,43 @@ class Stage: #often called in video game programming
            
 
    
-
-
+ def draw_targetz(self, pos, facexy): #draws target in appropiate position given users position
+   tx, ty, tz = pos 
+   cv2.circle(img, (ball0x , ball0y), 
+             50, (255, 0, 0), -1)
+   cv2.line(img,(960+ int((600-960)*.3**2), 540), (ball0x, ball0y), (255,0,0),3)
  
- #def update(self, facexy)#draws tunnel and targets based on user position
-  #x,y= facexy
- # e = .9 # smoothing constant
- # x = e * x + (1-e)*self.save_x
- # img = np.zros([1080,1920,3])
- # decay = 3
- # sx = sy = 0
-  #dx = int((x - self.cam_w/2)*2)
- # for i i
+
+ def update(self, facexy):#draws tunnel and targets based on user position
+    x,y= facexy
+    e = .9 # smoothing constant
+    x = e * x + (1-e)*self.save_x
+    img = np.zros([1080,1920,3])
+    decay = 3
+    sx = sy = 0
+    dx = int((x - self.cam_w/2)*2)
+    for i in range(1,7):
+     sx = sx + int((960-sx)*decay)
+     sy = sy + int((540-sy)*decay)
+     dx = int(dx * decay)
+     #print(sx, sy)
+     cv2.rectangle(img, (sx+dx,sy),(1920-sx+dx, 1080-sy), (255,255,255), 1)
+
+     ball0x = 600+ nt((x - self.cam_w/2)*2*.6)
+     ball0y = 540
+
+     cv2.line(img,(960+ int((600-960)*.3**2), 540),(ball0x, ball0y), (255,0,0),3)
+     self.draw_target_xy(img, (ball0x, ball0y), 35)
+
+     ball1x = 1000+ int((x - self.cam_w/2)*2*.2)
+     ball1y = 440
+
+     cv2.line(img, (960+ int((1200-960)*.3**2), 540 - int((540-650)*.3**2))(ball2x,ball2y),(255,0,0),3)
+
+     self.draw_target_xy(img, (ball2x, ball2y), 50)
+
+    cv2.imshow('Ronnals Game', img)
+
 
 
 #----------------------------------------
